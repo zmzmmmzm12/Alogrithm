@@ -1,1 +1,4 @@
-# Alogrithm
+# Algorithm
+University Assignments
+
+Algorithm
