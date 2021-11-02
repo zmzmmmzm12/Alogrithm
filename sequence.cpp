@@ -1,30 +1,36 @@
-#include<stdio.h>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <stdio.h>
+using namespace std;
 
 int main() {
 	FILE * inp = fopen("sequence.inp", "r");
 	FILE * out = fopen("sequence.out", "w");
-	long long int c, A,l;
-	int  re, i=1;
-	while (1) {
-		fscanf(inp, "%lld %lld", &c, &l);
-		if (c == -1) break;
-		re = 1; A = c;
-		while (1) {
-			if (c % 2 == 0) {
-				c /= 2; re++;
-			}
-			else {
-				c = 3 * c + 1;
-				re++;
-			}
-			if (c == 1) break;
-			if (c > l) {
-				re--;
-				break;
-			}
-		}
-		fprintf(out, "Case %d: A = %lld, limit = %lld, number of terms = %d\n", i, A, l, re);
-		i++;
+	vector<int> sequence, t;
+	int n, tmp;
+	fscanf(inp, "%d", &n);
+	int *result = new int[n];
+	for (int i = 0; i < n; i++) {
+		fscanf(inp, "%d", &tmp);
+		sequence.push_back(tmp);
 	}
-	fclose(inp); fclose(out);
+	sort(sequence.begin(), sequence.end());
+	for (int i = 0; i < n; i++) {
+		fscanf(inp, "%d", &tmp);
+		t.push_back(tmp);
+	}
+
+	for (int i = n - 1; i >= 0; i--) {
+		vector<int>::iterator it = sequence.begin();
+		int re = t[i];
+		result[i] = sequence[re];
+		sequence.erase(it + re);
+
+	}
+	for (int i = 0; i < n; i++) {
+		fprintf(out, "%d\n", result[i]);
+	}
+	fclose(inp), fclose(out);
+	return 0;
 }
